@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Syafunda — We Are Learning</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <!-- AOS animation library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f7fc;
+            color: #1a1e2b;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #eef1f7;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2b7a9e;
+            border-radius: 12px;
+        }
+
+        /* ----- navigation ----- */
+        .navbar {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px) saturate(180%);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.02);
+        }
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #0d4e8c, #2b7a9e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .logo span {
+            font-weight: 300;
+            -webkit-text-fill-color: #5a6a7a;
+            background: none;
+            font-size: 1rem;
+            margin-left: 6px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            color: #2d3748;
+            font-size: 0.95rem;
+            transition: 0.25s;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2.5px;
+            background: #2b7a9e;
+            transition: 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+        .nav-links a:hover {
+            color: #0d4e8c;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-cta {
+            background: linear-gradient(145deg, #0d4e8c, #1f6e9e);
+            color: white !important;
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(13, 78, 140, 0.2);
+            transition: 0.3s;
+        }
+        .nav-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(13, 78, 140, 0.3);
+            color: white !important;
+        }
+
+        /* ----- buttons & badges ----- */
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(145deg, #0d4e8c, #1f6e9e);
+            color: white;
+            padding: 16px 44px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
+            box-shadow: 0 8px 30px rgba(13, 78, 140, 0.2);
+            text-decoration: none;
+        }
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 16px 50px rgba(13, 78, 140, 0.35);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #2b7a9e;
+            color: #1a2a3a;
+            padding: 14px 36px;
+            border-radius: 60px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.3s;
+        }
+        .btn-outline:hover {
+            background: #2b7a9e;
+            color: white;
+        }
+        .section-badge {
+            display: inline-block;
+            background: rgba(43, 122, 158, 0.08);
+            color: #1f6e9e;
+            font-weight: 600;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            padding: 6px 20px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(43, 122, 158, 0.1);
+        }
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+        }
+        .section-title .highlight {
+            background: linear-gradient(135deg, #0d4e8c, #2b7a9e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .text-muted {
+            color: #4a5568;
+            max-width: 600px;
+        }
+
+        /* ----- HERO / HOME ----- */
+        .hero {
+            padding: 80px 0 60px;
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(43, 122, 158, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-content {
+            flex: 1 1 45%;
+            z-index: 2;
+        }
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+        }
+        .hero-content h1 .highlight {
+            font-style: normal;
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #2d3748;
+            margin: 28px 0 32px;
+            max-width: 520px;
+        }
+        .hero-image {
+            flex: 1 1 45%;
+            display: flex;
+            justify-content: center;
+            z-index: 2;
+        }
+        .hero-image img {
+            width: 100%;
+            max-width: 560px;
+            border-radius: 40px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.08);
+            transition: 0.5s;
+            animation: float 7s ease-in-out infinite;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-16px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .approach-strip {
+            background: white;
+            border-radius: 80px;
+            padding: 14px 30px;
+            display: inline-flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px 28px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.03);
+        }
+        .approach-strip span {
+            font-weight: 500;
+            color: #1a2a3a;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .approach-strip i {
+            color: #1f6e9e;
+        }
+        .approach-strip .badge {
+            background: #1f6e9e10;
+            color: #1f6e9e;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+        }
+
+        /* ----- cards & grids ----- */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 28px;
+            margin: 40px 0 20px;
+        }
+        .feature-card {
+            background: white;
+            padding: 34px 26px;
+            border-radius: 32px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            transition: 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(13, 78, 140, 0.06);
+            border-color: rgba(43, 122, 158, 0.08);
+        }
+        .feature-card .icon {
+            font-size: 2.6rem;
+            background: #f0f7fe;
+            padding: 14px;
+            border-radius: 24px;
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #1f6e9e;
+        }
+        .feature-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .feature-card p {
+            color: #4a5568;
+        }
+
+        .pillar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 24px;
+            margin-top: 30px;
+        }
+        .pillar-item {
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            padding: 30px 16px;
+            border-radius: 28px;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.01);
+            transition: 0.3s;
+        }
+        .pillar-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(13, 78, 140, 0.04);
+        }
+        .pillar-item i {
+            font-size: 2.4rem;
+            color: #1f6e9e;
+            margin-bottom: 12px;
+        }
+        .pillar-item h4 {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* ----- gallery ----- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin: 40px 0 20px;
+        }
+        .gallery-item {
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+            transition: 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+            position: relative;
+        }
+        .gallery-item:hover {
+            transform: scale(1.03) translateY(-6px);
+            box-shadow: 0 20px 50px rgba(13, 78, 140, 0.08);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            display: block;
+            transition: 0.5s;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        .gallery-item .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+            color: white;
+            opacity: 0;
+            transition: 0.4s;
+        }
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+        .gallery-item .overlay h4 {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .gallery-item .overlay p {
+            font-size: 0.85rem;
+            opacity: 0.85;
+        }
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ----- sections ----- */
+        .page-section {
+            padding: 70px 0 40px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.02);
+        }
+        .page-section:last-of-type {
+            border-bottom: 0;
+        }
+        .bg-soft {
+            background: #f8faff;
+            border-radius: 48px;
+            padding: 40px 30px;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        /* ----- leadership ----- */
+        .leadership-card {
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            border-radius: 40px;
+            padding: 40px 44px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 44px;
+            margin: 30px 0;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
+            transition: 0.35s;
+        }
+        .leadership-card:hover {
+            box-shadow: 0 20px 60px rgba(13, 78, 140, 0.04);
+        }
+        .leadership-card img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #eef4fa;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+        }
+        .leadership-card blockquote {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #1a2a3a;
+            border-left: 4px solid #2b7a9e;
+            padding-left: 28px;
+            max-width: 560px;
+        }
+        .leadership-card blockquote strong {
+            display: block;
+            margin-top: 14px;
+            font-weight: 700;
+            color: #0d4e8c;
+        }
+        .commitment-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 28px;
+            margin-top: 20px;
+        }
+        .commitment-tags span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #2d3748;
+            font-size: 0.95rem;
+        }
+        .commitment-tags i {
+            color: #1f6e9e;
+        }
+
+        /* ----- contact ----- */
+        .contact-section {
+            background: white;
+            border-radius: 48px;
+            padding: 60px 50px;
+            margin: 40px 0 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.01);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+        .contact-info h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .contact-info p {
+            color: #4a5568;
+            margin-bottom: 28px;
+        }
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 14px;
+        }
+        .contact-detail i {
+            width: 44px;
+            height: 44px;
+            background: #f0f7fe;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1f6e9e;
+            font-size: 1.1rem;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 16px 22px;
+            border: 1px solid #e2e8f0;
+            border-radius: 30px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            background: #fafcfd;
+            color: #1a2a3a;
+            transition: 0.25s;
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #2b7a9e;
+            box-shadow: 0 0 0 4px rgba(43, 122, 158, 0.06);
+        }
+        .contact-form .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .contact-form textarea {
+            min-height: 130px;
+            border-radius: 30px;
+            margin-bottom: 20px;
+            resize: vertical;
+        }
+        .contact-form button {
+            width: 100%;
+            background: linear-gradient(145deg, #0d4e8c, #1f6e9e);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
+            box-shadow: 0 8px 30px rgba(13, 78, 140, 0.15);
+        }
+        .contact-form button:hover {
+            transform: scale(1.02) translateY(-2px);
+            box-shadow: 0 14px 50px rgba(13, 78, 140, 0.25);
+        }
+
+        /* ----- footer ----- */
+        .footer {
+            padding: 40px 0 24px;
+            border-top: 1px solid rgba(0, 0, 0, 0.04);
+            margin-top: 20px;
+            text-align: center;
+        }
+        .footer .socials {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            margin-bottom: 20px;
+        }
+        .footer .socials a {
+            color: #5a6a7a;
+            font-size: 1.5rem;
+            transition: 0.3s;
+            display: inline-block;
+        }
+        .footer .socials a:hover {
+            color: #0d4e8c;
+            transform: translateY(-4px) scale(1.1);
+        }
+
+        /* ----- AOS overrides ----- */
+        [data-aos] {
+            pointer-events: none;
+        }
+        [data-aos].aos-animate {
+            pointer-events: auto;
+        }
+
+        /* ----- responsive ----- */
+        @media (max-width: 900px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-content p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .approach-strip {
+                justify-content: center;
+            }
+            .contact-section {
+                grid-template-columns: 1fr;
+                padding: 40px 24px;
+            }
+            .contact-form .form-row {
+                grid-template-columns: 1fr;
+            }
+            .leadership-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            .leadership-card blockquote {
+                border-left: 0;
+                padding-left: 0;
+            }
+            .nav-links {
+                gap: 16px;
+            }
+            .nav-cta {
+                padding: 6px 16px;
+                font-size: 0.85rem;
+            }
+            .section-title {
+                font-size: 2.4rem;
+            }
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 0 16px;
+            }
+            .navbar .container {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .hero-content h1 {
+                font-size: 2.4rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .contact-section {
+                padding: 28px 16px;
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">Syafunda <span>· we are learning</span></div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#vision">Vision</a>
+                <a href="#focus">Focus</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#leadership">Leadership</a>
+                <a href="#contact" class="nav-cta"><i class="fas fa-comment-dots" style="margin-right: 8px;"></i> Contact us</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+
+        <!-- ===== HOME / HERO ===== -->
+        <section id="home" class="hero container">
+            <div class="hero-content" data-aos="fade-up" data-aos-duration="800" data-aos-easing="ease-out-cubic">
+                <span class="section-badge"><i class="fas fa-graduation-cap" style="margin-right: 6px;"></i> since 2019</span>
+                <h1>We are <span class="highlight">learning</span>.<br />We are <span class="highlight">Syafunda</span></h1>
+                <p>Syafunda is a South African education and learning solutions company committed to improving educational outcomes through innovative, accessible, and learner‑centred learning solutions. The name Syafunda means <strong style="color:#1a2a3a;">‘We Are Learning’</strong>.</p>
+                <div class="approach-strip">
+                    <span class="badge">our approach</span>
+                    <span><i class="fas fa-circle-check"></i> Assess</span>
+                    <span><i class="fas fa-arrow-right"></i> Support</span>
+                    <span><i class="fas fa-arrow-right"></i> Track</span>
+                    <span><i class="fas fa-arrow-right"></i> Improve</span>
+                </div>
+                <div style="margin-top: 32px;">
+                    <a href="#contact" class="btn-primary"><i class="fas fa-handshake" style="margin-right: 12px;"></i>Partner with us</a>
+                </div>
+            </div>
+            <div class="hero-image" data-aos="fade-left" data-aos-duration="900" data-aos-easing="ease-out-cubic">
+                <img src="https://images.unsplash.com/photo-1523050854058-8df90110c7f1?w=800&auto=format&fit=crop&q=60" alt="students learning" />
+            </div>
+        </section>
+
+        <!-- ===== ABOUT ===== -->
+        <section id="about" class="page-section">
+            <div class="container">
+                <div style="text-align: center; max-width: 700px; margin: 0 auto 20px;" data-aos="fade-up" data-aos-duration="700">
+                    <span class="section-badge"><i class="fas fa-info-circle"></i> about us</span>
+                    <h2 class="section-title">Who we <span class="highlight">are</span></h2>
+                    <p class="text-muted" style="margin: 0 auto;">We partner with schools, institutions, communities, and organisations to strengthen learning ecosystems and create opportunities for growth.</p>
+                </div>
+                <div style="display: flex; justify-content: center; margin-top: 10px;" data-aos="zoom-in" data-aos-duration="600">
+                    <div class="approach-strip">
+                        <span class="badge">our approach</span>
+                        <span><i class="fas fa-circle-check"></i> Assess</span>
+                        <span><i class="fas fa-arrow-right"></i> Support</span>
+                        <span><i class="fas fa-arrow-right"></i> Track</span>
+                        <span><i class="fas fa-arrow-right"></i> Improve</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== VISION, MISSION ===== -->
+        <section id="vision" class="page-section">
+            <div class="container">
+                <div style="display: flex; flex-wrap: wrap; gap: 50px; align-items: center;">
+                    <div style="flex: 1 1 45%;" data-aos="fade-up" data-aos-duration="800">
+                        <span class="section-badge"><i class="fas fa-bullseye"></i> vision &amp; mission</span>
+                        <h2 class="section-title">Our <span class="highlight">purpose</span> drives us</h2>
+                        <p class="text-muted" style="font-size: 1.1rem;">Education transforms lives, empowers communities, and creates sustainable opportunities.</p>
+                        <div style="margin-top: 32px; display: grid; gap: 20px;">
+                            <div style="background: white; padding: 24px 28px; border-radius: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.02); border:1px solid rgba(0,0,0,0.02);">
+                                <h4 style="display: flex; gap: 12px;"><i class="fas fa-eye" style="color: #1f6e9e;"></i> Vision</h4>
+                                <p style="color: #2d3748;">To become a leading African education and learning solutions partner.</p>
+                            </div>
+                            <div style="background: white; padding: 24px 28px; border-radius: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.02); border:1px solid rgba(0,0,0,0.02);">
+                                <h4 style="display: flex; gap: 12px;"><i class="fas fa-rocket" style="color: #1f6e9e;"></i> Mission</h4>
+                                <p style="color: #2d3748;">Improve educational outcomes through innovative learning solutions, academic support, assessments, content development, and technology‑enabled experiences.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="flex: 1 1 45%;" data-aos="fade-left" data-aos-duration="900">
+                        <img src="images/1.jpg" alt="vision" style="width:100%; border-radius: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.04);" />
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: center; margin-top: 30px;" data-aos="zoom-in" data-aos-duration="600">
+                    <div class="approach-strip">
+                        <span class="badge">our approach</span>
+                        <span><i class="fas fa-circle-check"></i> Assess</span>
+                        <span><i class="fas fa-arrow-right"></i> Support</span>
+                        <span><i class="fas fa-arrow-right"></i> Track</span>
+                        <span><i class="fas fa-arrow-right"></i> Improve</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== BELIEFS ===== -->
+        <section id="beliefs" class="page-section bg-soft" style="margin: 0 20px;">
+            <div class="container">
+                <div style="text-align: center; max-width: 700px; margin: 0 auto 20px;" data-aos="fade-up" data-aos-duration="700">
+                    <span class="section-badge"><i class="fas fa-heart"></i> our values</span>
+                    <h2 class="section-title">What we <span class="highlight">believe</span></h2>
+                    <p class="text-muted" style="margin: 0 auto;">These values guide every programme, partnership, and solution we develop.</p>
+                </div>
+                <div class="card-grid">
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="50" data-aos-duration="700">
+                        <div class="icon"><i class="fas fa-road"></i></div>
+                        <h3>Learning is a Journey</h3>
+                        <p>We embrace lifelong learning and continuous growth for every learner.</p>
+                    </div>
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="150" data-aos-duration="700">
+                        <div class="icon"><i class="fas fa-door-open"></i></div>
+                        <h3>Access Creates Opportunity</h3>
+                        <p>We break down barriers to make quality education accessible to all.</p>
+                    </div>
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="250" data-aos-duration="700">
+                        <div class="icon"><i class="fas fa-lightbulb"></i></div>
+                        <h3>Innovation Enhances Learning</h3>
+                        <p>We leverage technology and new approaches to improve outcomes.</p>
+                    </div>
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="350" data-aos-duration="700">
+                        <div class="icon"><i class="fas fa-handshake"></i></div>
+                        <h3>Collaboration Creates Impact</h3>
+                        <p>We partner with schools, communities, and organisations for lasting change.</p>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: center; margin-top: 20px;" data-aos="zoom-in" data-aos-duration="600">
+                    <div class="approach-strip">
+                        <span class="badge">our approach</span>
+                        <span><i class="fas fa-circle-check"></i> Assess</span>
+                        <span><i class="fas fa-arrow-right"></i> Support</span>
+                        <span><i class="fas fa-arrow-right"></i> Track</span>
+                        <span><i class="fas fa-arrow-right"></i> Improve</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== STRATEGIC FOCUS ===== -->
+        <section id="focus" class="page-section">
+            <div class="container">
+                <div style="display: flex; flex-wrap: wrap; gap: 50px; align-items: center;">
+                    <div style="flex: 1 1 45%; order: 2;" data-aos="fade-up" data-aos-duration="800">
+                        <span class="section-badge"><i class="fas fa-bullseye"></i> strategic focus</span>
+                        <h2 class="section-title">Our <span class="highlight">pillars</span> of impact</h2>
+                        <p class="text-muted">We focus on creating inclusive, practical, and measurable educational interventions that help learners succeed.</p>
+                        <div class="pillar-grid">
+                            <div class="pillar-item"><i class="fas fa-book-open"></i><h4>Learning Content</h4></div>
+                            <div class="pillar-item"><i class="fas fa-chart-line"></i><h4>Assessment &amp; Improvement</h4></div>
+                            <div class="pillar-item"><i class="fas fa-users"></i><h4>Learner Support</h4></div>
+                            <div class="pillar-item"><i class="fas fa-laptop"></i><h4>Digital Learning</h4></div>
+                        </div>
+                    </div>
+                    <div style="flex: 1 1 45%; order: 1;" data-aos="fade-right" data-aos-duration="900">
+                        <img src="images/50.jpg" alt="focus" style="width:100%; border-radius: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.04);" />
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: center; margin-top: 30px;" data-aos="zoom-in" data-aos-duration="600">
+                    <div class="approach-strip">
+                        <span class="badge">our approach</span>
+                        <span><i class="fas fa-circle-check"></i> Assess</span>
+                        <span><i class="fas fa-arrow-right"></i> Support</span>
+                        <span><i class="fas fa-arrow-right"></i> Track</span>
+                        <span><i class="fas fa-arrow-right"></i> Improve</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== GALLERY ===== -->
+        <section id="gallery" class="page-section bg-soft" style="margin: 0 20px;">
+            <div class="container">
+                <div style="text-align: center; max-width: 700px; margin: 0 auto 20px;" data-aos="fade-up" data-aos-duration="700">
+                    <span class="section-badge"><i class="fas fa-images"></i> our gallery</span>
+                    <h2 class="section-title">Moments of <span class="highlight">impact</span></h2>
+                    <p class="text-muted" style="margin: 0 auto;">A glimpse into our learning communities, partnerships, and the vibrant environments we create.</p>
+                </div>
+                <div class="gallery-grid">
+                    <div class="gallery-item" data-aos="zoom-in" data-aos-delay="50" data-aos-duration="700">
+                        <img src="images/70.jpg" alt="students in class" />
+                        <div class="overlay">
+                            <h4>Collaborative Learning</h4>
+                            <p>Students engaging in group discussions.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-aos="zoom-in" data-aos-delay="150" data-aos-duration="700">
+                        <img src="images/59.jpg" alt="teacher helping" />
+                        <div class="overlay">
+                            <h4>Educator Support</h4>
+                            <p>Personalised guidance for every learner.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-aos="zoom-in" data-aos-delay="250" data-aos-duration="700">
+                        <img src="images/61.jpg" alt="digital learning" />
+                        <div class="overlay">
+                            <h4>Digital Learning</h4>
+                            <p>Technology-enabled education experiences.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100" data-aos-duration="700">
+                        <img src="images/67.jpg" alt="community" />
+                        <div class="overlay">
+                            <h4>Community Engagement</h4>
+                            <p>Building strong learning ecosystems.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200" data-aos-duration="700">
+                        <img src="images/13.jpg" alt="leadership" />
+                        <div class="overlay">
+                            <h4>Leadership & Vision</h4>
+                            <p>Driving innovation in education.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-aos="zoom-in" data-aos-delay="300" data-aos-duration="700">
+                        <img src="images/10.jpg" alt="graduates" />
+                        <div class="overlay">
+                            <h4>Graduation & Success</h4>
+                            <p>Celebrating learner achievements.</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: center; margin-top: 20px;" data-aos="zoom-in" data-aos-duration="600">
+                    <div class="approach-strip">
+                        <span class="badge">our approach</span>
+                        <span><i class="fas fa-circle-check"></i> Assess</span>
+                        <span><i class="fas fa-arrow-right"></i> Support</span>
+                        <span><i class="fas fa-arrow-right"></i> Track</span>
+                        <span><i class="fas fa-arrow-right"></i> Improve</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== LEADERSHIP ===== -->
+        <section id="leadership" class="page-section">
+            <div class="container">
+                <div style="text-align: center; max-width: 700px; margin: 0 auto 20px;" data-aos="fade-up" data-aos-duration="700">
+                    <span class="section-badge"><i class="fas fa-user-tie"></i> leadership</span>
+                    <h2 class="section-title">Committed to <span class="highlight">excellence</span></h2>
+                </div>
+                <div class="leadership-card" data-aos="flip-up" data-aos-duration="900" data-aos-easing="ease-out-cubic">
+                    <img src="images/ceo.jpg" alt="Raymond Biya" />
+                    <div>
+                        <blockquote>
+                            “Syafunda continues to drive innovation and meaningful impact across the education sector. We are committed to improving learner outcomes, supporting educational excellence, expanding access, and building strong partnerships.”
+                            <strong>— Raymond Biya, CEO</strong>
+                        </blockquote>
+                        <div class="commitment-tags">
+                            <span><i class="fas fa-check-circle"></i> Improve learner outcomes</span>
+                            <span><i class="fas fa-check-circle"></i> Support educational excellence</span>
+                            <span><i class="fas fa-check-circle"></i> Expand access to quality education</span>
+                            <span><i class="fas fa-check-circle"></i> Encourage lifelong learning</span>
+                            <span><i class="fas fa-check-circle"></i> Build strong partnerships</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: center;" data-aos="zoom-in" data-aos-duration="600">
+                    <div class="approach-strip">
+                        <span class="badge">our approach</span>
+                        <span><i class="fas fa-circle-check"></i> Assess</span>
+                        <span><i class="fas fa-arrow-right"></i> Support</span>
+                        <span><i class="fas fa-arrow-right"></i> Track</span>
+                        <span><i class="fas fa-arrow-right"></i> Improve</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CONTACT ===== -->
+        <section id="contact" class="container">
+            <div class="contact-section" data-aos="fade-up" data-aos-duration="900">
+                <div class="contact-info">
+                    <span class="section-badge"><i class="fas fa-envelope"></i> get in touch</span>
+                    <h2>Let's <span class="highlight">collaborate</span></h2>
+                    <p>We partner with schools, institutions, communities, and organisations to strengthen learning ecosystems. Reach out — let's create impact together.</p>
+                    <div class="contact-detail"><i class="fas fa-map-pin"></i> <span>South Africa (head office)</span></div>
+                    <div class="contact-detail"><i class="fas fa-envelope"></i> <span>hello@syafunda.co.za</span></div>
+                    <div class="contact-detail"><i class="fas fa-phone-alt"></i> <span>+27 10 123 4567</span></div>
+                    <div style="margin-top: 28px; display: flex; gap: 20px;">
+                        <a href="#" style="color:#4a5568; font-size: 1.6rem; transition:0.3s;"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" style="color:#4a5568; font-size: 1.6rem; transition:0.3s;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="color:#4a5568; font-size: 1.6rem; transition:0.3s;"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" style="color:#4a5568; font-size: 1.6rem; transition:0.3s;"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm" onsubmit="event.preventDefault(); alert('Thank you for reaching out! We\'ll connect with you soon. — Syafunda');">
+                        <div class="form-row">
+                            <input type="text" placeholder="Full name" required />
+                            <input type="email" placeholder="Email address" required />
+                        </div>
+                        <input type="text" placeholder="Subject" style="margin-bottom: 20px; width: 100%; padding: 16px 22px; border:1px solid #e2e8f0; border-radius:30px; background:#fafcfd; color:#1a2a3a;" />
+                        <textarea placeholder="Tell us how we can partner..." required></textarea>
+                        <button type="submit"><i class="fas fa-paper-plane" style="margin-right: 10px;"></i>Send message</button>
+                    </form>
+                    <p style="margin-top: 16px; font-size: 0.9rem; color: #5a6a7a; text-align: center;">We'll respond within 24 hours.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer container">
+        <div class="socials">
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p>© 2025 Syafunda — We Are Learning. All rights reserved.</p>
+        <p style="font-size: 0.8rem; color: #5a6a7a; margin-top: 4px;">Assess · Support · Track · Improve</p>
+    </footer>
+
+    <!-- AOS script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js">
+    </script>
+    <script>
+        AOS.init({
+            once: false,
+            mirror: false,
+            duration: 800,
+            easing: 'ease-out-cubic'
+        });
+    </script>
+</body>
+</html>
